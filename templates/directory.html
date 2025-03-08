@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Directory: {{ current_path }}</h2>
+  <!-- Breadcrumb navigation -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+      {% for name, path in breadcrumbs %}
+        <li class="breadcrumb-item"><a href="{{ url_for('browse', subpath=path) }}">{{ name }}</a></li>
+      {% endfor %}
+    </ol>
+  </nav>
+  {% if subdirs or pdfs %}
+    <ul class="list-group">
+      {% for d in subdirs %}
+        <li class="list-group-item">
+          <a href="{{ url_for('browse', subpath=current_path ~ '/' ~ d) }}">{{ d }}/</a>
+        </li>
+      {% endfor %}
+      {% for pdf in pdfs %}
+        <li class="list-group-item">
+          <a href="{{ url_for('serve_pdf', filepath=current_path ~ '/' ~ pdf) }}">{{ pdf }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No PDFs or subdirectories found.</p>
+  {% endif %}
+{% endblock %}

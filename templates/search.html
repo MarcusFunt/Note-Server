@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Search Results</h2>
+  {% if query %}
+    <p>Showing results for "<strong>{{ query }}</strong>":</p>
+    {% if results %}
+      <ul class="list-group">
+        {% for path in results %}
+          <li class="list-group-item">
+            <!-- Use url_for('serve_pdf') with the file path -->
+            <a href="{{ url_for('serve_pdf', filepath=path) }}">{{ path }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No matching PDF files found.</p>
+    {% endif %}
+  {% else %}
+    <p>Please enter a search query.</p>
+  {% endif %}
+{% endblock %}

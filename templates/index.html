@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>PDF Notes - Root Directory</h2>
+  {% if subdirs or pdfs %}
+    <ul class="list-group">
+      {% for d in subdirs %}
+        <li class="list-group-item">
+          <a href="{{ url_for('browse', subpath=d) }}">{{ d }}/</a>
+        </li>
+      {% endfor %}
+      {% for pdf in pdfs %}
+        <li class="list-group-item">
+          <a href="{{ url_for('serve_pdf', filepath=pdf) }}">{{ pdf }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No PDFs or subdirectories found.</p>
+  {% endif %}
+{% endblock %}
